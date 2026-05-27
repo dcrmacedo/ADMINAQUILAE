@@ -603,7 +603,6 @@
                 display: none;
             }
 
-            /* Ajuste seção de configurações */
             .flex.justify-between {
                 flex-wrap: wrap;
                 gap: 10px;
@@ -632,7 +631,7 @@
         <div style="background-color: #0a1f44; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px;">
             <div style="background-color: white; padding: 40px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); width: 100%; max-width: 400px;">
                 <h1 style="text-align: center; margin-bottom: 30px; color: #0a1f44; font-size: 1.8rem; font-weight: bold;">
-                    <i class="fas fa-crown"></i> AQUILAE -REGIAE-
+                    <i class=""></i> AQUILAE -REGIAE-
                 </h1>
 
                 <h2 style="text-align: center; margin-bottom: 25px; color: #333; font-size: 1.3rem;">Painel Administrativo</h2>
@@ -665,7 +664,7 @@
         <div style="background-color: #0a1f44; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px;">
             <div style="background-color: white; padding: 40px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); width: 100%; max-width: 400px;">
                 <h1 style="text-align: center; margin-bottom: 30px; color: #0a1f44; font-size: 1.8rem; font-weight: bold;">
-                    <i class="fas fa-crown"></i> AQUILAE -REGIAE-
+                    <i class=""></i> AQUILAE -REGIAE-
                 </h1>
 
                 <h2 style="text-align: center; margin-bottom: 25px; color: #333; font-size: 1.3rem;">Criar Conta</h2>
@@ -705,7 +704,7 @@
             <button class="hamburger-btn" onclick="toggleSidebar()">
                 <i class="fas fa-bars"></i>
             </button>
-            <span style="font-weight:bold;font-size:1rem;"><i class="fas fa-crown"></i> Admin</span>
+            <span style="font-weight:bold;font-size:1rem;"><i class=""></i> Admin</span>
             <span id="mobileUserEmail" style="font-size:0.75rem;opacity:0.8;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
         </div>
 
@@ -715,14 +714,14 @@
         <!-- Sidebar -->
         <div class="sidebar">
             <h2 class="text-xl font-bold mb-8">
-                <i class="fas fa-crown"></i> Admin
+                <i class="fas "></i> Admin
             </h2>
             
             <div class="sidebar-item active" onclick="showSection('dashboard')">
                 <i class="fas fa-chart-line"></i> Dashboard
             </div>
             <div class="sidebar-item" onclick="showSection('videos')">
-                <i class="fas fa-video"></i> Vídeos
+                <i class="fas fa-video"></i>VídeoAulas
             </div>
             <div class="sidebar-item" onclick="showSection('professors')">
                 <i class="fas fa-chalkboard-user"></i> Professores
@@ -730,8 +729,14 @@
             <div class="sidebar-item" onclick="showSection('content')">
                 <i class="fas fa-file-alt"></i> Conteúdo
             </div>
-            <div class="sidebar-item" onclick="showSection('settings')">
-                <i class="fas fa-cog"></i> Configurações
+            <div class="sidebar-item" onclick="showSection('disciplinas')">
+                <i class="fas fa-book-open"></i> Disciplinas
+            </div>
+            <div class="sidebar-item" onclick="showSection('enem')">
+                <i class="fas fa-graduation-cap"></i> ENEM
+            </div>
+            <div class="sidebar-item" onclick="showSection('quemSomos')">
+                <i class="fas fa-building"></i> Quem Somos
             </div>
             
             <hr class="my-4 border-gray-500">
@@ -766,7 +771,9 @@
                         <li><strong>Vídeos</strong> - Upload e gerenciamento de vídeos curtos</li>
                         <li><strong>Professores</strong> - Adicionar, editar ou remover professores</li>
                         <li><strong>Conteúdo</strong> - Gerenciar páginas e seções do site</li>
-                        <li><strong>Configurações</strong> - Ajustes gerais do sistema</li>
+                        <li><strong>Disciplinas</strong> - Editar textos de Língua Portuguesa, Matemática, História, Inglês, Geografia e adicionar novas disciplinas do ENEM</li>
+                        <li><strong>ENEM</strong> - Gerenciar abas de Redação e Simulados com questões</li>
+                        <li><strong>Quem Somos</strong> - Criar e editar aba</li>
                     </ul>
                 </div>
 
@@ -1015,23 +1022,308 @@
                 </div>
             </div>
 
-            <!-- Settings Section -->
-            <div id="settingsSection" class="section hidden">
-                <div class="card">
-                    <h2 class="text-2xl font-bold mb-4">Configurações</h2>
-                    <div class="form-group">
-                        <label for="siteTitle">Título do Site</label>
-                        <input type="text" id="siteTitle" placeholder="AQUILAE -REGIAE- INSTITUTO DE ENSINO">
+            <!-- ===== DISCIPLINAS SECTION ===== -->
+            <div id="disciplinasSection" class="section hidden">
+                <div class="card" style="padding-bottom:0">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+                        <div>
+                            <h2 class="text-2xl font-bold">Gerenciar Disciplinas</h2>
+                            <p class="text-gray-500" style="font-size:0.85rem;margin-top:4px;">Edite os textos das disciplinas exibidas no site. As abas representam cada disciplina da grade.</p>
+                        </div>
+                        <button class="btn btn-success" oncli="openDisciplinaModal()">
+                            <i class="fas fa"></i> 
+                        </button>
                     </div>
-                    <div class="form-group">
-                        <label for="siteDescription">Descrição</label>
-                        <textarea id="siteDescription" placeholder="Descrição do site" rows="4"></textarea>
+                    <div class="tabs-container" id="disciplinasTabs">
+                        <button class="tab-btn active" onclick="switchDisciplinaTab('lingua-portuguesa',event)" id="dtab-lingua-portuguesa">Língua Portuguesa</button>
+                        <button class="tab-btn" onclick="switchDisciplinaTab('matematica',event)" id="dtab-matematica">Matemática</button>
+                        <button class="tab-btn" onclick="switchDisciplinaTab('historia',event)" id="dtab-historia">História</button>
+                        <button class="tab-btn" onclick="switchDisciplinaTab('ingles',event)" id="dtab-ingles">Inglês</button>
+                        <button class="tab-btn" onclick="switchDisciplinaTab('geografia',event)" id="dtab-geografia">Geografia</button>
+                        <button class="tab-btn" onclick="switchDisciplinaTab('biologia',event)" id="dtab-biologia">Biologia</button>
+                        <button class="tab-btn" onclick="switchDisciplinaTab('quimica',event)" id="dtab-quimica">Química</button>
+                        <button class="tab-btn" onclick="switchDisciplinaTab('fisica',event)" id="dtab-fisica">Física</button>
+                        <button class="tab-btn" onclick="switchDisciplinaTab('filosofia',event)" id="dtab-filosofia">Filosofia</button>
+                        <button class="tab-btn" onclick="switchDisciplinaTab('literatura',event)" id="dtab-literatura">Literatura</button>
+                        <button class="tab-btn" onclick="switchDisciplinaTab('sociologia',event)" id="dtab-sociologia">Sociologia</button>
+                        <button class="tab-btn" onclick="switchDisciplinaTab('educacao-fisica',event)" id="dtab-educacao-fisica">Educação Física</button>
                     </div>
-                    <button class="btn btn-success" onclick="saveSettings()">
-                        <i class="fas fa-save"></i> Salvar Configurações
-                    </button>
+                </div>
+
+                <div id="disciplinasPanel" style="padding-top:20px;">
+                    <!-- Cards da disciplina selecionada -->
+                    <div class="card">
+                        <div style="background:#e8f5e9;border:1px solid #81c784;color:#2e7d32;padding:10px 16px;border-radius:6px;margin-bottom:16px;font-size:0.85rem;">
+                            <i class="fas fa-sync-alt"></i> <strong>Tempo real:</strong> Cards salvos aqui aparecem imediatamente no site quando o visitante abre a página da disciplina.
+                        </div>
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+                            <div>
+                                <h3 class="text-xl font-bold" id="disciplinasPanelTitle">Língua Portuguesa</h3>
+                                <p class="text-gray-500" style="font-size:0.85rem;margin-top:4px;">Gerencie os cards de conteúdo exibidos nessa disciplina.</p>
+                            </div>
+                            <div style="display:flex;gap:8px;">
+                                <button class="btn btn-warning" onclick="editDisciplinaTab()" style="font-size:0.85rem;">
+                                    <i class="fas fa-edit"></i> Editar Aba
+                                </button>
+                                <button class="btn btn-success" onclick="openDisciplinaCardModal()" style="font-size:0.85rem;">
+                                    <i class="fas fa-plus"></i> Novo Card
+                                </button>
+                            </div>
+                        </div>
+                        <div class="table-wrapper"><table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Categoria / Sub-aba</th>
+                                    <th>Título do Card</th>
+                                    <th>Descrição</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="disciplinasCardsBody">
+                                <tr><td colspan="4" class="text-center text-gray-500">Carregando...</td></tr>
+                            </tbody>
+                        </table></div>
+                    </div>
                 </div>
             </div>
+
+            <!-- ===== ENEM SECTION ===== -->
+            <div id="enemSection" class="section hidden">
+                <div class="card" style="padding-bottom:0">
+                    <h2 class="text-2xl font-bold mb-4">Gerenciar ENEM</h2>
+                    <div class="tabs-container">
+                        <button class="tab-btn active" onclick="switchEnemTab('redacao',event)" id="etab-redacao">
+                            <i class="fas fa-pen"></i> Redação
+                        </button>
+                        <button class="tab-btn" onclick="switchEnemTab('simulados',event)" id="etab-simulados">
+                            <i class="fas fa-clipboard-list"></i> Simulados
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ENEM: REDAÇÃO -->
+                <div id="enemPanel-redacao" style="padding-top:20px;">
+                    <div class="card">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+                            <div>
+                                <h3 class="text-xl font-bold">Abas de Redação</h3>
+                                <p class="text-gray-500" style="font-size:0.85rem;margin-top:4px;">Gerencie as abas e conteúdos da seção de Redação do ENEM.</p>
+                            </div>
+                            <button class="btn btn-success" onclick="openRedacaoModal()">
+                                <i class="fas fa-plus"></i> Nova Aba
+                            </button>
+                        </div>
+                        <div class="table-wrapper"><table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Título da Aba</th>
+                                    <th>Subtítulo</th>
+                                    <th>Conteúdo (resumo)</th>
+                                    <th>Ordem</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="redacaoTableBody">
+                                <tr><td colspan="5" class="text-center text-gray-500">Carregando...</td></tr>
+                            </tbody>
+                        </table></div>
+                    </div>
+                </div>
+
+                <!-- ENEM: SIMULADOS -->
+                <div id="enemPanel-simulados" style="padding-top:20px;display:none;">
+                    <div class="card">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+                            <div>
+                                <h3 class="text-xl font-bold">Simulados</h3>
+                                <p class="text-gray-500" style="font-size:0.85rem;margin-top:4px;">Gerencie os simulados e adicione questões de múltipla escolha.</p>
+                            </div>
+                            <button class="btn btn-success" onclick="openSimuladoModal()">
+                                <i class="fas fa-plus"></i> Novo Simulado
+                            </button>
+                        </div>
+                        <div class="table-wrapper"><table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Título do Simulado</th>
+                                    <th>Disciplina</th>
+                                    <th>Qtd. Questões</th>
+                                    <th>Dificuldade</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="simuladoTableBody">
+                                <tr><td colspan="5" class="text-center text-gray-500">Carregando...</td></tr>
+                            </tbody>
+                        </table></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== QUEM SOMOS SECTION ===== -->
+            <div id="quemSomosSection" class="section hidden">
+
+                <!-- ABAS INTERNAS -->
+                <div class="card" style="padding-bottom:0;margin-bottom:0;">
+                    <h2 class="text-2xl font-bold mb-1">Gerenciar — Quem Somos</h2>
+                    <p class="text-gray-500" style="font-size:0.85rem;margin-bottom:16px;">Edite todas as seções da página "Quem Somos" do site em tempo real.</p>
+                    <div class="tabs-container" id="qsTabs">
+                        <button class="tab-btn active" id="qstab-principal" onclick="switchQsTab('principal',event)"><i class="fas fa-file-alt"></i> Conteúdo Principal</button>
+                        <button class="tab-btn" id="qstab-mvv" onclick="switchQsTab('mvv',event)"><i class="fas fa-bullseye"></i> Missão / Visão / Valores</button>
+                        <button class="tab-btn" id="qstab-diferenciais" oncli="switchQsTab('diferenciais',event)"><i class="fas fa-star"></i> Diferenciais</button>
+                        <button class="tab-btn" id="qstab-timeline" onclick="switchQsTab('timeline',event)"><i class="fas fa-history"></i> Timeline</button>
+                        <button class="tab-btn" id="qstab-equipe" oncli="switchQsTab('equipe',event)"><i class="fas fa-users"></i> Equipe</button>
+                    </div>
+                </div>
+
+                <!-- PAINEL: CONTEÚDO PRINCIPAL (Hero + Seção) -->
+                <div id="qspanel-principal" style="padding-top:20px;">
+                    <div class="card">
+                        <div style="background:#e3f0fd;border:1px solid #90caf9;color:#1565c0;padding:10px 16px;border-radius:6px;margin-bottom:20px;font-size:0.85rem;">
+                            <i class="fas fa-sync-alt"></i> <strong>Tempo real:</strong> Salvar aqui atualiza imediatamente a página 
+                        </div>
+                        <h3 class="text-xl font-bold mb-4"><i class="fas fa-image" style="color:#1976d2;margin-right:8px;"></i>(Topo da Página)</h3>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                            <div class="form-group">
+                                <label for="qsHeroTitulo">Título Superior</label>
+                                <input type="text" id="qsHeroTitulo" placeholder="Ex: Quem Somos">
+                            </div>
+                            <div class="form-group">
+                                <label for="qsHeroSubtitulo">Subtítulo Superior</label>
+                                <input type="text" id="qsHeroSubtitulo" placeholder="Ex: Conheça a história e os valores que nos movem">
+                            </div>
+                            <div class="form-group" style="grid-column:1/-1;">
+                                <label for="qsHeroBg">URL da Imagem de Fundo Superior</label>
+                                <input type="url" id="qsHeroBg" placeholder="https://...">
+                                <small class="text-gray-500">Imagem exibida como background do banner principal.</small>
+                            </div>
+                            <div class="form-group" style="grid-column:1/-1;">
+                                <label for="qsHeroBgFile">Ou Anexar Imagem</label>
+                                <div style="display:flex;gap:10px;align-items:flex-start;">
+                                    <input type="file" id="qsHeroBgFile" accept="image/*" style="flex:1;">
+                                    <button class="btn btn-primary" onclick="uploadQsHeroBg()"><i class="fas fa-upload"></i> Enviar</button>
+                                </div>
+                                <small class="text-gray-500">Envie a imagem para o servidor. Após o upload, a URL será preenchida automaticamente.</small>
+                                <div id="qsHeroBgProgress" style="display:none;margin-top:10px;">
+                                    <div style="background:#f0f0f0;border-radius:5px;height:20px;overflow:hidden;">
+                                        <div id="qsHeroBgProgressBar" style="background:#28a745;height:100%;width:0%;transition:width 0.3s;"></div>
+                                    </div>
+                                    <small id="qsHeroBgProgressText" class="text-gray-500" style="display:block;margin-top:5px;"></small>
+                                </div>
+                            </div>
+                        </div>
+                        <hr style="margin:24px 0;border-color:#eee;">
+                        <h3 class="text-xl font-bold mb-4"><i class="fas fa-align-left" style="color:#1976d2;margin-right:8px;"></i>Seção Principal</h3>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                            <div class="form-group">
+                                <label for="qsMainTitle">Título da Seção</label>
+                                <input type="text" id="qsMainTitle" placeholder="Ex: Sobre o AQUILAE">
+                            </div>
+                            <div class="form-group">
+                                <label for="qsMainImage">URL da Imagem Lateral</label>
+                                <input type="url" id="qsMainImage" placeholder="https://...">
+                                <small class="text-gray-500">Imagem exibida ao lado do texto principal.</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="qsMainImageFile">Ou Anexar Imagem</label>
+                                <div style="display:flex;gap:10px;align-items:flex-start;">
+                                    <input type="file" id="qsMainImageFile" accept="image/*" style="flex:1;">
+                                    <button class="btn btn-primary" onclick="uploadQsMainImage()"><i class="fas fa-upload"></i> Enviar</button>
+                                </div>
+                                <small class="text-gray-500">Envie a imagem para o servidor.</small>
+                                <div id="qsMainImageProgress" style="display:none;margin-top:10px;">
+                                    <div style="background:#f0f0f0;border-radius:5px;height:20px;overflow:hidden;">
+                                        <div id="qsMainImageProgressBar" style="background:#28a745;height:100%;width:0%;transition:width 0.3s;"></div>
+                                    </div>
+                                    <small id="qsMainImageProgressText" class="text-gray-500" style="display:block;margin-top:5px;"></small>
+                                </div>
+                            </div>
+                            <div class="form-group" style="grid-column:1/-1;">
+                                <label for="qsMainContent">Conteúdo Principal</label>
+                                <textarea id="qsMainContent" rows="10" placeholder="Texto da seção principal...&#10;Segundo parágrafo...&#10;Item 1"></textarea>
+                                <small class="text-gray-500"></small>
+                            </div>
+                        </div>
+                        <div class="flex gap-2" style="margin-top:8px;">
+                            <button class="btn btn-success" onclick="saveQuemSomosPrincipal()"><i class="fas fa-save"></i> Salvar Conteúdo Principal</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PAINEL: MISSÃO VISÃO VALORES -->
+                <div id="qspanel-mvv" style="padding-top:20px;display:none;">
+                    <div class="card">
+                        <h3 class="text-xl font-bold mb-4"><i class="fas fa-bullseye" style="color:#1976d2;margin-right:8px;"></i>Missão, Visão e Valores</h3>
+                        <div class="form-group">
+                            <label for="qsMissao"><i class="fas fa-bullseye" style="color:#e57373;margin-right:6px;"></i>Missão</label>
+                            <textarea id="qsMissao" rows="4" placeholder="Descreva a missão da instituição..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="qsVisao"><i class="fas fa-eye" style="color:#64b5f6;margin-right:6px;"></i>Visão</label>
+                            <textarea id="qsVisao" rows="4" placeholder="Descreva a visão da instituição..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="qsValores"><i class="fas fa-gem" style="color:#81c784;margin-right:6px;"></i>Valores</label>
+                            <textarea id="qsValores" rows="4" placeholder="Liste os valores da instituição..."></textarea>
+                        </div>
+                        <button class="btn btn-success" onclick="saveQuemSomosMVV()"><i class="fas fa-save"></i> Salvar Missão / Visão / Valores</button>
+                    </div>
+                </div>
+
+                <!-- PAINEL: DIFERENCIAIS -->
+                <div id="qspanel-diferenciais" style="padding-top:20px;display:none;">
+                    <div class="card">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+                            <div>
+                                <h3 class="text-xl font-bold">Diferenciais / Cards "Por Que Escolher?"</h3>
+                                <p class="text-gray-500" style="font-size:0.85rem;margin-top:4px;">Gerencie os cards exibidos na seção de diferenciais da página.</p>
+                            </div>
+                            <button class="btn btn-success" onclick="openDiferencialModal()"><i class="fas fa-plus"></i> Novo Diferencial</button>
+                        </div>
+                        <div class="table-wrapper"><table class="table">
+                            <thead><tr><th>Ícone</th><th>Título</th><th>Descrição</th><th>Ações</th></tr></thead>
+                            <tbody id="diferencialTableBody"><tr><td colspan="4" class="text-center text-gray-500">Carregando...</td></tr></tbody>
+                        </table></div>
+                    </div>
+                </div>
+
+                <!-- PAINEL: TIMELINE -->
+                <div id="qspanel-timeline" style="padding-top:20px;display:none;">
+                    <div class="card">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+                            <div>
+                                <h3 class="text-xl font-bold">Nossa Trajetória — Timeline</h3>
+                                <p class="text-gray-500" style="font-size:0.85rem;margin-top:4px;">Adicione marcos históricos que aparecem na timeline do site.</p>
+                            </div>
+                            <button class="btn btn-success" onclick="openTimelineModal()"><i class="fas fa-plus"></i> Novo Marco</button>
+                        </div>
+                        <div class="table-wrapper"><table class="table">
+                            <thead><tr><th>Ano</th><th>Título</th><th>Descrição</th><th>Ações</th></tr></thead>
+                            <tbody id="timelineTableBody"><tr><td colspan="4" class="text-center text-gray-500">Carregando...</td></tr></tbody>
+                        </table></div>
+                    </div>
+                </div>
+
+                <!-- PAINEL: EQUIPE -->
+                <div id="qspanel-equipe" style="padding-top:20px;display:none;">
+                    <div class="card">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+                            <div>
+                                <h3 class="text-xl font-bold">Nossa Equipe</h3>
+                                <p class="text-gray-500" style="font-size:0.85rem;margin-top:4px;">Gerencie os membros exibidos na seção de equipe.</p>
+                            </div>
+                            <button class="btn btn-success" onclick="openEquipeModal()"><i class="fas fa-plus"></i> Novo Membro</button>
+                        </div>
+                        <div class="table-wrapper"><table class="table">
+                            <thead><tr><th style="width:60px">Foto</th><th>Nome</th><th>Cargo</th><th>Ordem</th><th>Ações</th></tr></thead>
+                            <tbody id="equipeTableBody"><tr><td colspan="5" class="text-center text-gray-500">Carregando...</td></tr></tbody>
+                        </table></div>
+                    </div>
+                </div>
+
+            </div>
+
+            
         </div>
     </div>
 
@@ -1332,7 +1624,7 @@
                     <option value="">Selecione...</option>
                     <option value="Staff">Staff de Professores</option>
                     <option value="Ciencias">Ciências Da Natureza</option>
-                    <option value="Humanas">Humanas</option>
+                    
                 </select>
             </div>
 
@@ -1369,6 +1661,329 @@
     </div>
 
     <!-- Scripts -->
+    <!-- ===== MODAL: NOVA DISCIPLINA (ABA) ===== -->
+    <div id="disciplinaModal" class="modal">
+        <div class="modal-content">
+            <h2 class="text-2xl font-bold mb-4" id="disciplinaModalTitle">Nova Disciplina</h2>
+            <input type="hidden" id="disciplinaId">
+            <div class="form-group">
+                <label for="disciplinaNome">Nome da Disciplina</label>
+                <input type="text" id="disciplinaNome" placeholder="Ex: Ciências da Natureza">
+            </div>
+            <div class="form-group">
+                <label for="disciplinaSlug">Slug (identificador único, sem espaços)</label>
+                <input type="text" id="disciplinaSlug" placeholder="Ex: ciencias-natureza">
+                <small class="text-gray-500">Usado como ID interno. Use letras minúsculas e hífens.</small>
+            </div>
+            <div class="form-group">
+                <label for="disciplinaDescricao">Descrição curta</label>
+                <textarea id="disciplinaDescricao" rows="2" placeholder="Breve descrição da disciplina..."></textarea>
+            </div>
+            <div class="flex gap-2">
+                <button class="btn btn-success" onclick="saveDisciplina()"><i class="fas fa-save"></i> Salvar</button>
+                <button class="btn" onclick="closeDisciplinaModal()" style="background-color:#6c757d;color:white;"><i class="fas fa-times"></i> Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MODAL: EDITAR ABA DA DISCIPLINA ===== -->
+    <div id="disciplinaTabModal" class="modal">
+        <div class="modal-content">
+            <h2 class="text-2xl font-bold mb-4" id="disciplinaTabModalTitle">Editar Aba da Disciplina</h2>
+            <input type="hidden" id="disciplinaTabId">
+            <div class="form-group">
+                <label for="disciplinaTabNome">Nome da Aba (exibido no site)</label>
+                <input type="text" id="disciplinaTabNome" placeholder="Ex: Produção de Textos">
+            </div>
+            <div class="form-group">
+                <label for="disciplinaTabSlug">Slug da Aba</label>
+                <input type="text" id="disciplinaTabSlug" placeholder="Ex: producao">
+            </div>
+            <div class="flex gap-2">
+                <button class="btn btn-success" onclick="saveDisciplinaTab()"><i class="fas fa-save"></i> Salvar</button>
+                <button class="btn" onclick="closeDisciplinaTabModal()" style="background-color:#6c757d;color:white;"><i class="fas fa-times"></i> Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MODAL: CARD DE DISCIPLINA ===== -->
+    <div id="disciplinaCardModal" class="modal">
+        <div class="modal-content">
+            <h2 class="text-2xl font-bold mb-4" id="disciplinaCardModalTitle">Novo Card de Conteúdo</h2>
+            <input type="hidden" id="disciplinaCardId">
+
+            <div class="form-group">
+                <label for="disciplinaCardCategoria">Sub-aba / Categoria</label>
+                <input type="text" id="disciplinaCardCategoria" placeholder="Ex: Brasil Colonial, Produção de Textos, Álgebra, etc">
+                <small class="text-gray-500">Digite o nome da sub-aba/categoria (você pode colocar o que quiser).</small>
+            </div>
+
+            <div class="form-group">
+                <label for="disciplinaCardTitulo">Título do Card</label>
+                <input type="text" id="disciplinaCardTitulo" placeholder="Ex: Entenda o que é Elipse com exemplos">
+            </div>
+            <div class="form-group">
+                <label for="disciplinaCardDescricao">Descrição</label>
+                <textarea id="disciplinaCardDescricao" rows="4" placeholder="Descrição detalhada do conteúdo do card..."></textarea>
+            </div>
+            <div class="form-group">
+                <label for="disciplinaCardLink">Link (opcional)</label>
+                <input type="url" id="disciplinaCardLink" placeholder="https://...">
+                <small class="text-gray-500">Link para página de detalhe ou material externo.</small>
+            </div>
+            <div class="flex gap-2">
+                <button class="btn btn-success" onclick="saveDisciplinaCard()"><i class="fas fa-save"></i> Salvar</button>
+                <button class="btn" onclick="closeDisciplinaCardModal()" style="background-color:#6c757d;color:white;"><i class="fas fa-times"></i> Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MODAL: REDAÇÃO ENEM ===== -->
+    <div id="redacaoModal" class="modal">
+        <div class="modal-content">
+            <h2 class="text-2xl font-bold mb-4" id="redacaoModalTitle">Nova Aba de Redação</h2>
+            <input type="hidden" id="redacaoId">
+            <div class="form-group">
+                <label for="redacaoTituloAba">Título da Aba</label>
+                <input type="text" id="redacaoTituloAba" placeholder="Ex: Estrutura da Redação, Competências...">
+            </div>
+            <div class="form-group">
+                <label for="redacaoSubtitulo">Subtítulo</label>
+                <input type="text" id="redacaoSubtitulo" placeholder="Ex: Aprenda a estruturar sua redação nota 1000">
+            </div>
+            <div class="form-group">
+                <label for="redacaoConteudo">Conteúdo / Texto Principal</label>
+                <textarea id="redacaoConteudo" rows="6" placeholder="Digite o conteúdo completo desta aba de Redação..."></textarea>
+            </div>
+            <div class="form-group">
+                <label for="redacaoDica">Dica Destacada (opcional)</label>
+                <input type="text" id="redacaoDica" placeholder="Ex: A introdução deve apresentar o tema e sua tese.">
+            </div>
+            <div class="form-group">
+                <label for="redacaoOrdem">Ordem de exibição</label>
+                <input type="number" id="redacaoOrdem" placeholder="1" min="1" value="1">
+            </div>
+            <div class="flex gap-2">
+                <button class="btn btn-success" onclick="saveRedacao()"><i class="fas fa-save"></i> Salvar</button>
+                <button class="btn" onclick="closeRedacaoModal()" style="background-color:#6c757d;color:white;"><i class="fas fa-times"></i> Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MODAL: SIMULADO ===== -->
+    <div id="simuladoModal" class="modal">
+        <div class="modal-content" style="max-width:750px;">
+            <h2 class="text-2xl font-bold mb-4" id="simuladoModalTitle">Novo Simulado</h2>
+            <input type="hidden" id="simuladoId">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                <div class="form-group">
+                    <label for="simuladoTitulo">Título do Simulado</label>
+                    <input type="text" id="simuladoTitulo" placeholder="Ex: Simulado Língua Portuguesa 2025">
+                </div>
+                <div class="form-group">
+                    <label for="simuladoDisciplina">Disciplina</label>
+                    <select id="simuladoDisciplina">
+                        <option value="lingua-portuguesa">Língua Portuguesa</option>
+                        <option value="matematica">Matemática</option>
+                        <option value="historia">História</option>
+                        <option value="ingles">Inglês</option>
+                        <option value="geografia">Geografia</option>
+                        <option value="biologia">Biologia</option>
+                        <option value="quimica">Química</option>
+                        <option value="fisica">Física</option>
+                        <option value="filosofia">Filosofia</option>
+                        <option value="literatura">Literatura</option>
+                        <option value="sociologia">Sociologia</option>
+                        <option value="geral">Geral</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="simuladoDificuldade">Dificuldade</label>
+                    <select id="simuladoDificuldade">
+                        <option value="Fácil">Fácil</option>
+                        <option value="Médio">Médio</option>
+                        <option value="Difícil">Difícil</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="simuladoAno">Ano de referência</label>
+                    <input type="text" id="simuladoAno" placeholder="Ex: 2024">
+                </div>
+            </div>
+
+            <hr style="margin:16px 0; border-color:#eee;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+                <h3 style="font-weight:bold;font-size:1rem;">Questões</h3>
+                <button class="btn btn-primary" onclick="addQuestao()" style="font-size:0.8rem;padding:6px 12px;">
+                    <i class="fas fa-plus"></i> Adicionar Questão
+                </button>
+            </div>
+            <div id="questoesContainer" style="display:flex;flex-direction:column;gap:16px;max-height:400px;overflow-y:auto;padding-right:4px;">
+                <!-- Questões dinâmicas aqui -->
+            </div>
+
+            <div class="flex gap-2" style="margin-top:20px;">
+                <button class="btn btn-success" onclick="saveSimulado()"><i class="fas fa-save"></i> Salvar Simulado</button>
+                <button class="btn" onclick="closeSimuladoModal()" style="background-color:#6c757d;color:white;"><i class="fas fa-times"></i> Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MODAL: BLOG POST ===== -->
+    <div id="blogModal" class="modal">
+        <div class="modal-content" style="max-width:700px;">
+            <h2 class="text-2xl font-bold mb-4" id="blogModalTitle">Novo Post do Blog</h2>
+            <input type="hidden" id="blogId">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                <div class="form-group" style="grid-column:1/-1;">
+                    <label for="blogTitulo">Título do Post</label>
+                    <input type="text" id="blogTitulo" placeholder="Ex: Como se preparar para a redação do ENEM em 30 dias">
+                </div>
+                <div class="form-group">
+                    <label for="blogCategoria">Categoria</label>
+                    <select id="blogCategoria">
+                        <option value="dicas">Dicas de Estudo</option>
+                        <option value="enem">ENEM</option>
+                        <option value="vestibular">Vestibular</option>
+                        <option value="redacao">Redação</option>
+                        <option value="disciplinas">Disciplinas</option>
+                        <option value="noticias">Notícias Educacionais</option>
+                        <option value="outros">Outros</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="blogAutor">Autor</label>
+                    <input type="text" id="blogAutor" placeholder="Ex: Prof. João Silva">
+                </div>
+                <div class="form-group">
+                    <label for="blogStatus">Status</label>
+                    <select id="blogStatus">
+                        <option value="publicado">Publicado</option>
+                        <option value="rascunho">Rascunho</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="blogData">Data de Publicação</label>
+                    <input type="date" id="blogData">
+                </div>
+                <div class="form-group" style="grid-column:1/-1;">
+                    <label for="blogImagemUrl">URL da Imagem de Capa</label>
+                    <input type="url" id="blogImagemUrl" placeholder="https://...">
+                </div>
+                <div class="form-group" style="grid-column:1/-1;">
+                    <label for="blogResumo">Resumo / Chamada</label>
+                    <textarea id="blogResumo" rows="2" placeholder="Texto de chamada exibido na listagem do blog..."></textarea>
+                </div>
+                <div class="form-group" style="grid-column:1/-1;">
+                    <label for="blogConteudo">Conteúdo Completo do Post</label>
+                    <textarea id="blogConteudo" rows="12" placeholder="Escreva aqui o conteúdo completo do post. Você pode usar parágrafos, listas e destaques.
+
+Exemplo de estrutura:
+INTRODUÇÃO
+O ENEM é a principal porta de entrada para as universidades brasileiras...
+
+DESENVOLVIMENTO
+1. Organize seu cronograma de estudos...
+2. Foque nas áreas com maior peso...
+
+CONCLUSÃO
+Com dedicação e planejamento, você pode alcançar sua meta..."></textarea>
+                    <small class="text-gray-500">Escreva o texto completo. Parágrafos separados por linha em branco serão formatados automaticamente.</small>
+                </div>
+                <div class="form-group" style="grid-column:1/-1;">
+                    <label for="blogTags">Tags (separadas por vírgula)</label>
+                    <input type="text" id="blogTags" placeholder="Ex: ENEM, redação, estudo, dicas">
+                </div>
+            </div>
+            <div class="flex gap-2" style="margin-top:8px;">
+                <button class="btn btn-success" onclick="saveBlog()"><i class="fas fa-save"></i> Salvar Post</button>
+                <button class="btn" onclick="closeBlogModal()" style="background-color:#6c757d;color:white;"><i class="fas fa-times"></i> Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MODAL: DIFERENCIAL ===== -->
+    <div id="diferencialModal" class="modal">
+        <div class="modal-content">
+            <h2 class="text-2xl font-bold mb-4" id="diferencialModalTitle">Novo Diferencial</h2>
+            <input type="hidden" id="diferencialId">
+            <div class="form-group">
+                <label for="diferencialIcone">Ícone Font Awesome</label>
+                <input type="text" id="diferencialIcone" placeholder="Ex: fas fa-graduation-cap">
+                <small class="text-gray-500">Use classes do Font Awesome 6. Ex: <code>fas fa-star</code>, <code>fas fa-lightbulb</code></small>
+            </div>
+            <div class="form-group">
+                <label for="diferencialTitulo">Título</label>
+                <input type="text" id="diferencialTitulo" placeholder="Ex: Excelência Acadêmica">
+            </div>
+            <div class="form-group">
+                <label for="diferencialDescricao">Descrição</label>
+                <textarea id="diferencialDescricao" rows="3" placeholder="Breve descrição do diferencial..."></textarea>
+            </div>
+            <div class="flex gap-2">
+                <button class="btn btn-success" onclick="saveDiferencial()"><i class="fas fa-save"></i> Salvar</button>
+                <button class="btn" onclick="closeDiferencialModal()" style="background-color:#6c757d;color:white;"><i class="fas fa-times"></i> Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MODAL: TIMELINE ===== -->
+    <div id="timelineModal" class="modal">
+        <div class="modal-content">
+            <h2 class="text-2xl font-bold mb-4" id="timelineModalTitle">Novo Marco da Timeline</h2>
+            <input type="hidden" id="timelineId">
+            <div style="display:grid;grid-template-columns:120px 1fr;gap:12px;">
+                <div class="form-group">
+                    <label for="timelineAno">Ano</label>
+                    <input type="text" id="timelineAno" placeholder="Ex: 2024">
+                </div>
+                <div class="form-group">
+                    <label for="timelineTitulo">Título do Marco</label>
+                    <input type="text" id="timelineTitulo" placeholder="Ex: Lançamento da plataforma digital">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="timelineDescricao">Descrição</label>
+                <textarea id="timelineDescricao" rows="3" placeholder="Descreva o que aconteceu neste marco..."></textarea>
+            </div>
+            <div class="flex gap-2">
+                <button class="btn btn-success" onclick="saveTimeline()"><i class="fas fa-save"></i> Salvar</button>
+                <button class="btn" onclick="closeTimelineModal()" style="background-color:#6c757d;color:white;"><i class="fas fa-times"></i> Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MODAL: MEMBRO DA EQUIPE ===== -->
+    <div id="equipeModal" class="modal">
+        <div class="modal-content">
+            <h2 class="text-2xl font-bold mb-4" id="equipeModalTitle">Novo Membro da Equipe</h2>
+            <input type="hidden" id="equipeId">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                <div class="form-group">
+                    <label for="equipeName">Nome</label>
+                    <input type="text" id="equipeName" placeholder="Ex: Prof. João Silva">
+                </div>
+                <div class="form-group">
+                    <label for="equipeCargo">Cargo / Função</label>
+                    <input type="text" id="equipeCargo" placeholder="Ex: Diretor Pedagógico">
+                </div>
+                <div class="form-group" style="grid-column:1/-1;">
+                    <label for="equipeImagem">URL da Foto</label>
+                    <input type="url" id="equipeImagem" placeholder="https://...">
+                    <small class="text-gray-500">URL de uma imagem de perfil. Deixe em branco para usar ícone padrão.</small>
+                </div>
+                <div class="form-group">
+                    <label for="equipeOrdem">Ordem de exibição</label>
+                    <input type="number" id="equipeOrdem" placeholder="1" min="1" value="1">
+                </div>
+            </div>
+            <div class="flex gap-2">
+                <button class="btn btn-success" onclick="saveEquipe()"><i class="fas fa-save"></i> Salvar</button>
+                <button class="btn" onclick="closeEquipeModal()" style="background-color:#6c757d;color:white;"><i class="fas fa-times"></i> Cancelar</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // ========== CONFIGURAÇÃO SUPABASE ==========
         const SUPABASE_URL = 'https://yhxqztyxotoukdszswid.supabase.co';
@@ -1513,8 +2128,19 @@
                 loadAtualidades();
                 loadNoticias();
                 loadRecomendados();
-            } else if (sectionName === 'settings') {
-                document.getElementById('settingsSection').classList.remove('hidden');
+            } else if (sectionName === 'disciplinas') {
+                document.getElementById('disciplinasSection').classList.remove('hidden');
+                loadDisciplinasCards();
+            } else if (sectionName === 'enem') {
+                document.getElementById('enemSection').classList.remove('hidden');
+                loadRedacao();
+                loadSimulados();
+            } else if (sectionName === 'blog') {
+                document.getElementById('blogSection').classList.remove('hidden');
+                loadBlog();
+            } else if (sectionName === 'quemSomos') {
+                document.getElementById('quemSomosSection').classList.remove('hidden');
+                loadQuemSomos();
             }
 
             event.target.closest('.sidebar-item').classList.add('active');
@@ -2502,26 +3128,1032 @@
             }
         }
 
-        // ========== CONFIGURAÇÕES ==========
-        async function saveSettings() {
-            const title = document.getElementById('siteTitle').value;
-            const description = document.getElementById('siteDescription').value;
+        // ========== DISCIPLINAS ==========
+        // Dados locais das disciplinas (sincronizados com Supabase)
+        const defaultDisciplinas = {
+            'lingua-portuguesa': { nome: 'Língua Portuguesa', subabas: ['producao','sintaxe','morfologia','pragmatica','fonologia','ortografia','estilistica'] },
+            'matematica':       { nome: 'Matemática',         subabas: ['algebra','geometria','estatistica','trigonometria','funcoes'] },
+            'historia':         { nome: 'História',           subabas: ['brasil-colonial','brasil-imperial','brasil-republica','historia-mundial','atualidades'] },
+            'ingles':           { nome: 'Inglês',             subabas: ['gramatica','vocabulario','leitura','interpretacao','writing'] },
+            'geografia':        { nome: 'Geografia',          subabas: ['geopolitica','climatologia','hidrografia','cartografia','urbanizacao'] },
+            'biologia':         { nome: 'Biologia',           subabas: ['citologia','genetica','ecologia','evolucao','fisiologia'] },
+            'quimica':          { nome: 'Química',            subabas: ['quimica-organica','quimica-inorganica','estequiometria','termoquimica','eletroquimica'] },
+            'fisica':           { nome: 'Física',             subabas: ['mecanica','termodinamica','ondas','eletromagnetismo','fisica-moderna'] },
+            'filosofia':        { nome: 'Filosofia',          subabas: ['epistemologia','etica','logica','metafisica','filosofia-politica'] },
+            'literatura':       { nome: 'Literatura',         subabas: ['trovadorismo','barroco','romantismo','realismo','modernismo'] },
+            'sociologia':       { nome: 'Sociologia',         subabas: ['teorias-sociais','cultura','desigualdade','politica-social','trabalho'] },
+            'educacao-fisica':  { nome: 'Educação Física',    subabas: ['esportes','saude-qualidade','ginastica','jogos-ludicos','atletismo'] }
+        };
 
+        let currentDisciplinaSlug = 'lingua-portuguesa';
+        let questaoCount = 0;
+
+        function switchDisciplinaTab(slug, event) {
+            currentDisciplinaSlug = slug;
+            document.querySelectorAll('#disciplinasTabs .tab-btn').forEach(b => b.classList.remove('active'));
+            if (event) event.target.classList.add('active');
+            const d = defaultDisciplinas[slug];
+            document.getElementById('disciplinasPanelTitle').textContent = d ? d.nome : slug;
+            loadDisciplinasCards();
+        }
+
+        async function loadDisciplinasCards() {
+            const tbody = document.getElementById('disciplinasCardsBody');
+            tbody.innerHTML = '<tr><td colspan="4" class="text-center text-gray-500">Carregando...</td></tr>';
             try {
                 const { data, error } = await supabaseClient
-                    .from('settings')
-                    .upsert({
-                        user_id: currentUser.id,
-                        site_title: title,
-                        site_description: description
+                    .from('disciplina_cards')
+                    .select('*')
+                    .eq('user_id', currentUser.id)
+                    .eq('disciplina_slug', currentDisciplinaSlug)
+                    .order('id', { ascending: true });
+                if (error) throw error;
+                if (!data || data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4" class="text-center text-gray-500">Nenhum card cadastrado. Clique em "Novo Card" para adicionar.</td></tr>';
+                    return;
+                }
+                tbody.innerHTML = data.map(item => `
+                    <tr>
+                        <td><span style="background:#e8f0fe;color:#1a6fc4;padding:3px 8px;border-radius:12px;font-size:0.8rem;font-weight:700;">${item.categoria || '-'}</span></td>
+                        <td><strong>${item.titulo || '-'}</strong></td>
+                        <td style="max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${item.descricao || '-'}</td>
+                        <td>
+                            <button class="btn btn-warning text-sm" onclick="editDisciplinaCard(${item.id})"><i class="fas fa-edit"></i> Editar</button>
+                            <button class="btn btn-danger text-sm" onclick="deleteDisciplinaCard(${item.id})"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (e) {
+                tbody.innerHTML = `<tr><td colspan="4" class="text-center text-red-500">Erro: ${e.message}</td></tr>`;
+            }
+        }
+
+        function openDisciplinaModal() {
+            document.getElementById('disciplinaModalTitle').textContent = 'Nova Disciplina';
+            document.getElementById('disciplinaId').value = '';
+            document.getElementById('disciplinaNome').value = '';
+            document.getElementById('disciplinaSlug').value = '';
+            document.getElementById('disciplinaDescricao').value = '';
+            document.getElementById('disciplinaModal').classList.add('show');
+        }
+
+        function closeDisciplinaModal() {
+            document.getElementById('disciplinaModal').classList.remove('show');
+        }
+
+        async function saveDisciplina() {
+            const nome = document.getElementById('disciplinaNome').value.trim();
+            const slug = document.getElementById('disciplinaSlug').value.trim().toLowerCase().replace(/\s+/g, '-');
+            const descricao = document.getElementById('disciplinaDescricao').value.trim();
+            if (!nome || !slug) { showAlert('mainAlert','Preencha nome e slug','error'); return; }
+            try {
+                const { error } = await supabaseClient.from('disciplinas').upsert({ user_id: currentUser.id, nome, slug, descricao });
+                if (error) throw error;
+                // Adiciona aba dinamicamente
+                defaultDisciplinas[slug] = { nome, subabas: [] };
+                const tabsContainer = document.getElementById('disciplinasTabs');
+                const existingTab = document.getElementById('dtab-' + slug);
+                if (!existingTab) {
+                    const btn = document.createElement('button');
+                    btn.className = 'tab-btn';
+                    btn.id = 'dtab-' + slug;
+                    btn.setAttribute('onclick', `switchDisciplinaTab('${slug}',event)`);
+                    btn.textContent = nome;
+                    tabsContainer.appendChild(btn);
+                }
+                showAlert('mainAlert','Disciplina salva com sucesso!','success');
+                closeDisciplinaModal();
+            } catch(e) { showAlert('mainAlert','Erro: '+e.message,'error'); }
+        }
+
+        function editDisciplinaTab() {
+            const d = defaultDisciplinas[currentDisciplinaSlug];
+            document.getElementById('disciplinaTabModalTitle').textContent = 'Editar Aba: ' + (d ? d.nome : currentDisciplinaSlug);
+            document.getElementById('disciplinaTabId').value = currentDisciplinaSlug;
+            document.getElementById('disciplinaTabNome').value = d ? d.nome : '';
+            document.getElementById('disciplinaTabSlug').value = currentDisciplinaSlug;
+            document.getElementById('disciplinaTabModal').classList.add('show');
+        }
+
+        function closeDisciplinaTabModal() {
+            document.getElementById('disciplinaTabModal').classList.remove('show');
+        }
+
+        async function saveDisciplinaTab() {
+            const novoNome = document.getElementById('disciplinaTabNome').value.trim();
+            const slug = document.getElementById('disciplinaTabId').value;
+            if (!novoNome) { showAlert('mainAlert','Preencha o nome','error'); return; }
+            defaultDisciplinas[slug].nome = novoNome;
+            const tabBtn = document.getElementById('dtab-' + slug);
+            if (tabBtn) tabBtn.textContent = novoNome;
+            document.getElementById('disciplinasPanelTitle').textContent = novoNome;
+            try {
+                await supabaseClient.from('disciplinas').upsert({ user_id: currentUser.id, slug, nome: novoNome });
+            } catch(e) {}
+            showAlert('mainAlert','Aba atualizada!','success');
+            closeDisciplinaTabModal();
+        }
+
+        function getCategoriaValue() {
+            return document.getElementById('disciplinaCardCategoria').value.trim();
+        }
+
+        function setCategoriaValue(val) {
+            document.getElementById('disciplinaCardCategoria').value = val;
+        }
+
+        function openDisciplinaCardModal() {
+            document.getElementById('disciplinaCardModalTitle').textContent = 'Novo Card de Conteúdo';
+            document.getElementById('disciplinaCardId').value = '';
+            document.getElementById('disciplinaCardCategoria').value = '';
+            document.getElementById('disciplinaCardTitulo').value = '';
+            document.getElementById('disciplinaCardDescricao').value = '';
+            document.getElementById('disciplinaCardLink').value = '';
+            document.getElementById('disciplinaCardModal').classList.add('show');
+        }
+
+        function closeDisciplinaCardModal() {
+            document.getElementById('disciplinaCardModal').classList.remove('show');
+        }
+
+        async function editDisciplinaCard(id) {
+            try {
+                const { data, error } = await supabaseClient.from('disciplina_cards').select('*').eq('id', id).single();
+                if (error) throw error;
+                document.getElementById('disciplinaCardModalTitle').textContent = 'Editar Card';
+                document.getElementById('disciplinaCardId').value = data.id;
+                setCategoriaValue(data.categoria || '');
+                document.getElementById('disciplinaCardTitulo').value = data.titulo || '';
+                document.getElementById('disciplinaCardDescricao').value = data.descricao || '';
+                document.getElementById('disciplinaCardLink').value = data.link || '';
+                document.getElementById('disciplinaCardModal').classList.add('show');
+            } catch(e) { showAlert('mainAlert','Erro: '+e.message,'error'); }
+        }
+
+        async function saveDisciplinaCard() {
+            const id = document.getElementById('disciplinaCardId').value;
+            const categoria = getCategoriaValue();
+            const titulo = document.getElementById('disciplinaCardTitulo').value.trim();
+            const descricao = document.getElementById('disciplinaCardDescricao').value.trim();
+            const link = document.getElementById('disciplinaCardLink').value.trim();
+            if (!titulo) { showAlert('mainAlert','Preencha o título','error'); return; }
+            if (!categoria) { showAlert('mainAlert','Selecione a sub-aba','error'); return; }
+            try {
+                const payload = { user_id: currentUser.id, disciplina_slug: currentDisciplinaSlug, categoria, titulo, descricao, link };
+                let error;
+                if (id) {
+                    ({ error } = await supabaseClient.from('disciplina_cards').update(payload).eq('id', id));
+                } else {
+                    ({ error } = await supabaseClient.from('disciplina_cards').insert([payload]));
+                }
+                if (error) throw error;
+                showAlert('mainAlert', id ? 'Card atualizado!' : 'Card adicionado! O site já reflete a mudança.', 'success');
+                closeDisciplinaCardModal();
+                loadDisciplinasCards();
+            } catch(e) { showAlert('mainAlert','Erro: '+e.message,'error'); }
+        }
+
+        async function deleteDisciplinaCard(id) {
+            if (!confirm('Deletar este card?')) return;
+            try {
+                const { error } = await supabaseClient.from('disciplina_cards').delete().eq('id', id);
+                if (error) throw error;
+                showAlert('mainAlert','Card deletado!','success');
+                loadDisciplinasCards();
+            } catch(e) { showAlert('mainAlert','Erro: '+e.message,'error'); }
+        }
+
+        // ========== ENEM: REDAÇÃO ==========
+        function switchEnemTab(tab, event) {
+            document.getElementById('enemPanel-redacao').style.display = 'none';
+            document.getElementById('enemPanel-simulados').style.display = 'none';
+            document.querySelectorAll('[id^="etab-"]').forEach(b => b.classList.remove('active'));
+            document.getElementById('enemPanel-' + tab).style.display = 'block';
+            if (event) event.target.classList.add('active');
+            else document.getElementById('etab-' + tab).classList.add('active');
+        }
+
+        async function loadRedacao() {
+            const tbody = document.getElementById('redacaoTableBody');
+            tbody.innerHTML = '<tr><td colspan="5" class="text-center text-gray-500">Carregando...</td></tr>';
+            try {
+                const { data, error } = await supabaseClient
+                    .from('enem_redacao')
+                    .select('*')
+                    .eq('user_id', currentUser.id)
+                    .order('ordem', { ascending: true });
+                if (error) throw error;
+                if (!data || data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="5" class="text-center text-gray-500">Nenhuma aba cadastrada.</td></tr>';
+                    return;
+                }
+                tbody.innerHTML = data.map(item => `
+                    <tr>
+                        <td><strong>${item.titulo_aba || '-'}</strong></td>
+                        <td>${item.subtitulo || '-'}</td>
+                        <td style="max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${item.conteudo || '-'}</td>
+                        <td>${item.ordem || '-'}</td>
+                        <td>
+                            <button class="btn btn-warning text-sm" onclick="editRedacao(${item.id})"><i class="fas fa-edit"></i> Editar</button>
+                            <button class="btn btn-danger text-sm" onclick="deleteRedacao(${item.id})"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch(e) { tbody.innerHTML = `<tr><td colspan="5" class="text-center text-red-500">Erro: ${e.message}</td></tr>`; }
+        }
+
+        function openRedacaoModal() {
+            document.getElementById('redacaoModalTitle').textContent = 'Nova Aba de Redação';
+            document.getElementById('redacaoId').value = '';
+            document.getElementById('redacaoTituloAba').value = '';
+            document.getElementById('redacaoSubtitulo').value = '';
+            document.getElementById('redacaoConteudo').value = '';
+            document.getElementById('redacaoDica').value = '';
+            document.getElementById('redacaoOrdem').value = '1';
+            document.getElementById('redacaoModal').classList.add('show');
+        }
+
+        function closeRedacaoModal() {
+            document.getElementById('redacaoModal').classList.remove('show');
+        }
+
+        async function editRedacao(id) {
+            try {
+                const { data, error } = await supabaseClient.from('enem_redacao').select('*').eq('id', id).single();
+                if (error) throw error;
+                document.getElementById('redacaoModalTitle').textContent = 'Editar Aba de Redação';
+                document.getElementById('redacaoId').value = data.id;
+                document.getElementById('redacaoTituloAba').value = data.titulo_aba || '';
+                document.getElementById('redacaoSubtitulo').value = data.subtitulo || '';
+                document.getElementById('redacaoConteudo').value = data.conteudo || '';
+                document.getElementById('redacaoDica').value = data.dica || '';
+                document.getElementById('redacaoOrdem').value = data.ordem || 1;
+                document.getElementById('redacaoModal').classList.add('show');
+            } catch(e) { showAlert('mainAlert','Erro: '+e.message,'error'); }
+        }
+
+        async function saveRedacao() {
+            const id = document.getElementById('redacaoId').value;
+            const titulo_aba = document.getElementById('redacaoTituloAba').value.trim();
+            const subtitulo = document.getElementById('redacaoSubtitulo').value.trim();
+            const conteudo = document.getElementById('redacaoConteudo').value.trim();
+            const dica = document.getElementById('redacaoDica').value.trim();
+            const ordem = parseInt(document.getElementById('redacaoOrdem').value) || 1;
+            if (!titulo_aba) { showAlert('mainAlert','Preencha o título da aba','error'); return; }
+            // Gera slug automaticamente a partir do título
+            const slug = titulo_aba.toLowerCase()
+                .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+                .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+            try {
+                const payload = { user_id: currentUser.id, titulo_aba, subtitulo, conteudo, dica, ordem, slug };
+                let error;
+                if (id) { ({ error } = await supabaseClient.from('enem_redacao').update(payload).eq('id', id)); }
+                else { ({ error } = await supabaseClient.from('enem_redacao').insert([payload])); }
+                if (error) throw error;
+                showAlert('mainAlert', id ? 'Aba atualizada! O site de Redação já reflete a mudança.' : 'Aba criada! O site de Redação já reflete a mudança.', 'success');
+                closeRedacaoModal();
+                loadRedacao();
+            } catch(e) { showAlert('mainAlert','Erro: '+e.message,'error'); }
+        }
+
+        async function deleteRedacao(id) {
+            if (!confirm('Deletar esta aba?')) return;
+            try {
+                const { error } = await supabaseClient.from('enem_redacao').delete().eq('id', id);
+                if (error) throw error;
+                showAlert('mainAlert','Aba deletada!','success');
+                loadRedacao();
+            } catch(e) { showAlert('mainAlert','Erro: '+e.message,'error'); }
+        }
+
+        // ========== ENEM: SIMULADOS ==========
+        async function loadSimulados() {
+            const tbody = document.getElementById('simuladoTableBody');
+            tbody.innerHTML = '<tr><td colspan="5" class="text-center text-gray-500">Carregando...</td></tr>';
+            try {
+                const { data, error } = await supabaseClient
+                    .from('enem_simulados')
+                    .select('*')
+                    .eq('user_id', currentUser.id)
+                    .order('id', { ascending: false });
+                if (error) throw error;
+                if (!data || data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="5" class="text-center text-gray-500">Nenhum simulado cadastrado.</td></tr>';
+                    return;
+                }
+                tbody.innerHTML = data.map(item => {
+                    const questoes = item.questoes ? (Array.isArray(item.questoes) ? item.questoes : JSON.parse(item.questoes)) : [];
+                    return `
+                    <tr>
+                        <td><strong>${item.titulo || '-'}</strong></td>
+                        <td>${item.disciplina || '-'}</td>
+                        <td><span style="background:#e8f5e9;color:#2e7d32;padding:3px 8px;border-radius:12px;font-size:0.8rem;">${questoes.length} questão(ões)</span></td>
+                        <td><span style="background:${item.dificuldade==='Fácil'?'#e3f2fd':item.dificuldade==='Médio'?'#fff3e0':'#ffebee'};color:${item.dificuldade==='Fácil'?'#1565c0':item.dificuldade==='Médio'?'#e65100':'#c62828'};padding:3px 8px;border-radius:12px;font-size:0.8rem;">${item.dificuldade || '-'}</span></td>
+                        <td>
+                            <button class="btn btn-warning text-sm" onclick="editSimulado(${item.id})"><i class="fas fa-edit"></i> Editar</button>
+                            <button class="btn btn-danger text-sm" onclick="deleteSimulado(${item.id})"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>`;
+                }).join('');
+            } catch(e) { tbody.innerHTML = `<tr><td colspan="5" class="text-center text-red-500">Erro: ${e.message}</td></tr>`; }
+        }
+
+        function openSimuladoModal() {
+            document.getElementById('simuladoModalTitle').textContent = 'Novo Simulado';
+            document.getElementById('simuladoId').value = '';
+            document.getElementById('simuladoTitulo').value = '';
+            document.getElementById('simuladoDisciplina').value = 'lingua-portuguesa';
+            document.getElementById('simuladoDificuldade').value = 'Fácil';
+            document.getElementById('simuladoAno').value = '';
+            questaoCount = 0;
+            document.getElementById('questoesContainer').innerHTML = '';
+            addQuestao();
+            document.getElementById('simuladoModal').classList.add('show');
+        }
+
+        function closeSimuladoModal() {
+            document.getElementById('simuladoModal').classList.remove('show');
+        }
+
+        function addQuestao() {
+            questaoCount++;
+            const idx = questaoCount;
+            const container = document.getElementById('questoesContainer');
+            const div = document.createElement('div');
+            div.id = 'questao-' + idx;
+            div.style.cssText = 'background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:16px;';
+            div.innerHTML = `
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                    <strong style="color:#0a1f44;">Questão ${idx}</strong>
+                    <button onclick="removeQuestao(${idx})" style="background:none;border:none;color:#dc3545;cursor:pointer;font-size:0.85rem;"><i class="fas fa-trash"></i> Remover</button>
+                </div>
+                <div class="form-group">
+                    <label>Enunciado</label>
+                    <textarea id="qEnunciado-${idx}" rows="3" placeholder="Digite o enunciado da questão..." style="width:100%;padding:8px;border:1px solid #ddd;border-radius:4px;"></textarea>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                    <div class="form-group">
+                        <label>Alternativa A</label>
+                        <input type="text" id="qAltA-${idx}" placeholder="Alternativa A" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:4px;">
+                    </div>
+                    <div class="form-group">
+                        <label>Alternativa B</label>
+                        <input type="text" id="qAltB-${idx}" placeholder="Alternativa B" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:4px;">
+                    </div>
+                    <div class="form-group">
+                        <label>Alternativa C</label>
+                        <input type="text" id="qAltC-${idx}" placeholder="Alternativa C" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:4px;">
+                    </div>
+                    <div class="form-group">
+                        <label>Alternativa D</label>
+                        <input type="text" id="qAltD-${idx}" placeholder="Alternativa D" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:4px;">
+                    </div>
+                    <div class="form-group">
+                        <label>Alternativa E</label>
+                        <input type="text" id="qAltE-${idx}" placeholder="Alternativa E" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:4px;">
+                    </div>
+                    <div class="form-group">
+                        <label>Resposta Correta</label>
+                        <select id="qResposta-${idx}" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:4px;">
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                            <option value="E">E</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Explicação da Resposta</label>
+                    <textarea id="qExplicacao-${idx}" rows="2" placeholder="Explique por que esta é a resposta correta..." style="width:100%;padding:8px;border:1px solid #ddd;border-radius:4px;"></textarea>
+                </div>
+            `;
+            container.appendChild(div);
+        }
+
+        function removeQuestao(idx) {
+            const el = document.getElementById('questao-' + idx);
+            if (el) el.remove();
+        }
+
+        function collectQuestoes() {
+            const questoes = [];
+            document.querySelectorAll('[id^="questao-"]').forEach(el => {
+                const idx = el.id.replace('questao-','');
+                const enunciado = document.getElementById('qEnunciado-'+idx)?.value.trim();
+                if (!enunciado) return;
+                questoes.push({
+                    enunciado,
+                    alternativas: {
+                        A: document.getElementById('qAltA-'+idx)?.value.trim() || '',
+                        B: document.getElementById('qAltB-'+idx)?.value.trim() || '',
+                        C: document.getElementById('qAltC-'+idx)?.value.trim() || '',
+                        D: document.getElementById('qAltD-'+idx)?.value.trim() || '',
+                        E: document.getElementById('qAltE-'+idx)?.value.trim() || ''
+                    },
+                    resposta: document.getElementById('qResposta-'+idx)?.value || 'A',
+                    explicacao: document.getElementById('qExplicacao-'+idx)?.value.trim() || ''
+                });
+            });
+            return questoes;
+        }
+
+        function fillQuestoes(questoes) {
+            questaoCount = 0;
+            document.getElementById('questoesContainer').innerHTML = '';
+            questoes.forEach((q, i) => {
+                addQuestao();
+                const idx = i + 1;
+                if (document.getElementById('qEnunciado-'+idx)) {
+                    document.getElementById('qEnunciado-'+idx).value = q.enunciado || '';
+                    document.getElementById('qAltA-'+idx).value = q.alternativas?.A || '';
+                    document.getElementById('qAltB-'+idx).value = q.alternativas?.B || '';
+                    document.getElementById('qAltC-'+idx).value = q.alternativas?.C || '';
+                    document.getElementById('qAltD-'+idx).value = q.alternativas?.D || '';
+                    document.getElementById('qAltE-'+idx).value = q.alternativas?.E || '';
+                    document.getElementById('qResposta-'+idx).value = q.resposta || 'A';
+                    document.getElementById('qExplicacao-'+idx).value = q.explicacao || '';
+                }
+            });
+        }
+
+        async function editSimulado(id) {
+            try {
+                const { data, error } = await supabaseClient.from('enem_simulados').select('*').eq('id', id).single();
+                if (error) throw error;
+                document.getElementById('simuladoModalTitle').textContent = 'Editar Simulado';
+                document.getElementById('simuladoId').value = data.id;
+                document.getElementById('simuladoTitulo').value = data.titulo || '';
+                document.getElementById('simuladoDisciplina').value = data.disciplina || 'lingua-portuguesa';
+                document.getElementById('simuladoDificuldade').value = data.dificuldade || 'Fácil';
+                document.getElementById('simuladoAno').value = data.ano || '';
+                const questoes = data.questoes ? (typeof data.questoes === 'string' ? JSON.parse(data.questoes) : data.questoes) : [];
+                questaoCount = 0;
+                document.getElementById('questoesContainer').innerHTML = '';
+                if (questoes.length > 0) fillQuestoes(questoes);
+                else addQuestao();
+                document.getElementById('simuladoModal').classList.add('show');
+            } catch(e) { showAlert('mainAlert','Erro: '+e.message,'error'); }
+        }
+
+        async function saveSimulado() {
+            const id = document.getElementById('simuladoId').value;
+            const titulo = document.getElementById('simuladoTitulo').value.trim();
+            const disciplina = document.getElementById('simuladoDisciplina').value;
+            const dificuldade = document.getElementById('simuladoDificuldade').value;
+            const ano = document.getElementById('simuladoAno').value.trim();
+            const questoes = collectQuestoes();
+            if (!titulo) { showAlert('mainAlert','Preencha o título do simulado','error'); return; }
+            if (questoes.length === 0) { showAlert('mainAlert','Adicione ao menos uma questão com enunciado','error'); return; }
+            try {
+                const payload = { user_id: currentUser.id, titulo, disciplina, dificuldade, ano, questoes: JSON.stringify(questoes) };
+                let error;
+                if (id) { ({ error } = await supabaseClient.from('enem_simulados').update(payload).eq('id', id)); }
+                else { ({ error } = await supabaseClient.from('enem_simulados').insert([payload])); }
+                if (error) throw error;
+                showAlert('mainAlert', id ? 'Simulado atualizado!' : 'Simulado criado!', 'success');
+                closeSimuladoModal();
+                loadSimulados();
+            } catch(e) { showAlert('mainAlert','Erro: '+e.message,'error'); }
+        }
+
+        async function deleteSimulado(id) {
+            if (!confirm('Deletar este simulado?')) return;
+            try {
+                const { error } = await supabaseClient.from('enem_simulados').delete().eq('id', id);
+                if (error) throw error;
+                showAlert('mainAlert','Simulado deletado!','success');
+                loadSimulados();
+            } catch(e) { showAlert('mainAlert','Erro: '+e.message,'error'); }
+        }
+
+        // ========== BLOG ==========
+        async function loadBlog() {
+            const tbody = document.getElementById('blogTableBody');
+            tbody.innerHTML = '<tr><td colspan="7" class="text-center text-gray-500">Carregando...</td></tr>';
+            try {
+                const { data, error } = await supabaseClient
+                    .from('blog_posts')
+                    .select('*')
+                    .eq('user_id', currentUser.id)
+                    .order('data_publicacao', { ascending: false });
+                if (error) throw error;
+                if (!data || data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="7" class="text-center text-gray-500">Nenhum post publicado.</td></tr>';
+                    return;
+                }
+                tbody.innerHTML = data.map(item => `
+                    <tr>
+                        <td>${item.imagem_url ? `<img src="${item.imagem_url}" style="width:45px;height:45px;border-radius:4px;object-fit:cover;">` : '<i class="fas fa-image" style="font-size:1.5rem;color:#ccc;"></i>'}</td>
+                        <td><strong>${item.titulo || '-'}</strong><br><span style="font-size:0.78rem;color:#888;">${item.resumo ? item.resumo.substring(0,60)+'...' : ''}</span></td>
+                        <td><span style="background:#e8f0fe;color:#1a6fc4;padding:3px 8px;border-radius:12px;font-size:0.78rem;">${item.categoria || '-'}</span></td>
+                        <td style="font-size:0.85rem;">${item.autor || '-'}</td>
+                        <td style="font-size:0.85rem;">${item.data_publicacao || '-'}</td>
+                        <td><span style="background:${item.status==='publicado'?'#e8f5e9':'#fff3e0'};color:${item.status==='publicado'?'#2e7d32':'#e65100'};padding:3px 8px;border-radius:12px;font-size:0.78rem;font-weight:700;">${item.status || 'rascunho'}</span></td>
+                        <td>
+                            <button class="btn btn-warning text-sm" onclick="editBlog(${item.id})"><i class="fas fa-edit"></i> Editar</button>
+                            <button class="btn btn-danger text-sm" onclick="deleteBlog(${item.id})"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch(e) { tbody.innerHTML = `<tr><td colspan="7" class="text-center text-red-500">Erro: ${e.message}</td></tr>`; }
+        }
+
+        function openBlogModal() {
+            document.getElementById('blogModalTitle').textContent = 'Novo Post do Blog';
+            document.getElementById('blogId').value = '';
+            document.getElementById('blogTitulo').value = '';
+            document.getElementById('blogCategoria').value = 'dicas';
+            document.getElementById('blogAutor').value = '';
+            document.getElementById('blogStatus').value = 'publicado';
+            document.getElementById('blogData').value = new Date().toISOString().split('T')[0];
+            document.getElementById('blogImagemUrl').value = '';
+            document.getElementById('blogResumo').value = '';
+            document.getElementById('blogConteudo').value = '';
+            document.getElementById('blogTags').value = '';
+            document.getElementById('blogModal').classList.add('show');
+        }
+
+        function closeBlogModal() {
+            document.getElementById('blogModal').classList.remove('show');
+        }
+
+        async function editBlog(id) {
+            try {
+                const { data, error } = await supabaseClient.from('blog_posts').select('*').eq('id', id).single();
+                if (error) throw error;
+                document.getElementById('blogModalTitle').textContent = 'Editar Post';
+                document.getElementById('blogId').value = data.id;
+                document.getElementById('blogTitulo').value = data.titulo || '';
+                document.getElementById('blogCategoria').value = data.categoria || 'dicas';
+                document.getElementById('blogAutor').value = data.autor || '';
+                document.getElementById('blogStatus').value = data.status || 'publicado';
+                document.getElementById('blogData').value = data.data_publicacao || '';
+                document.getElementById('blogImagemUrl').value = data.imagem_url || '';
+                document.getElementById('blogResumo').value = data.resumo || '';
+                document.getElementById('blogConteudo').value = data.conteudo || '';
+                document.getElementById('blogTags').value = data.tags || '';
+                document.getElementById('blogModal').classList.add('show');
+            } catch(e) { showAlert('mainAlert','Erro: '+e.message,'error'); }
+        }
+
+        async function saveBlog() {
+            const id = document.getElementById('blogId').value;
+            const titulo = document.getElementById('blogTitulo').value.trim();
+            const categoria = document.getElementById('blogCategoria').value;
+            const autor = document.getElementById('blogAutor').value.trim();
+            const status = document.getElementById('blogStatus').value;
+            const data_publicacao = document.getElementById('blogData').value;
+            const imagem_url = document.getElementById('blogImagemUrl').value.trim();
+            const resumo = document.getElementById('blogResumo').value.trim();
+            const conteudo = document.getElementById('blogConteudo').value.trim();
+            const tags = document.getElementById('blogTags').value.trim();
+            if (!titulo) { showAlert('mainAlert','Preencha o título do post','error'); return; }
+            if (!conteudo) { showAlert('mainAlert','Preencha o conteúdo do post','error'); return; }
+            try {
+                const payload = { user_id: currentUser.id, titulo, categoria, autor, status, data_publicacao, imagem_url: imagem_url || null, resumo, conteudo, tags };
+                let error;
+                if (id) { ({ error } = await supabaseClient.from('blog_posts').update(payload).eq('id', id)); }
+                else { ({ error } = await supabaseClient.from('blog_posts').insert([payload])); }
+                if (error) throw error;
+                showAlert('mainAlert', id ? 'Post atualizado!' : 'Post publicado!', 'success');
+                closeBlogModal();
+                loadBlog();
+            } catch(e) { showAlert('mainAlert','Erro: '+e.message,'error'); }
+        }
+
+        async function deleteBlog(id) {
+            if (!confirm('Deletar este post?')) return;
+            try {
+                const { error } = await supabaseClient.from('blog_posts').delete().eq('id', id);
+                if (error) throw error;
+                showAlert('mainAlert','Post deletado!','success');
+                loadBlog();
+            } catch(e) { showAlert('mainAlert','Erro: '+e.message,'error'); }
+        }
+
+        // ========== QUEM SOMOS ==========
+
+        function switchQsTab(tab, event) {
+            ['principal','mvv','diferenciais','timeline','equipe'].forEach(t => {
+                document.getElementById('qspanel-' + t).style.display = 'none';
+                document.getElementById('qstab-' + t).classList.remove('active');
+            });
+            document.getElementById('qspanel-' + tab).style.display = 'block';
+            if (event) event.target.classList.add('active');
+            else document.getElementById('qstab-' + tab).classList.add('active');
+            // Lazy load de tabelas
+            if (tab === 'diferenciais') loadDiferenciais();
+            if (tab === 'timeline')     loadTimeline();
+            if (tab === 'equipe')       loadEquipe();
+        }
+
+        // ---- Carrega registro único da tabela quem_somos ----
+        async function loadQuemSomos() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('quem_somos').select('*').limit(1);
+                if (error) throw error;
+                const d = data && data[0] ? data[0] : {};
+                document.getElementById('qsHeroTitulo').value   = d.hero_titulo    || '';
+                document.getElementById('qsHeroSubtitulo').value= d.hero_subtitulo || '';
+                document.getElementById('qsHeroBg').value       = d.hero_background_url || '';
+                document.getElementById('qsMainTitle').value    = d.main_title     || '';
+                document.getElementById('qsMainImage').value    = d.main_image_url || '';
+                document.getElementById('qsMainContent').value  = d.main_content   || '';
+                document.getElementById('qsMissao').value       = d.missao         || '';
+                document.getElementById('qsVisao').value        = d.visao          || '';
+                document.getElementById('qsValores').value      = d.valores        || '';
+            } catch(e) { showAlert('mainAlert','Erro ao carregar: '+e.message,'error'); }
+        }
+
+        // ---- Salva conteúdo principal + hero ----
+        async function saveQuemSomosPrincipal() {
+            const payload = {
+                hero_titulo:          document.getElementById('qsHeroTitulo').value.trim(),
+                hero_subtitulo:       document.getElementById('qsHeroSubtitulo').value.trim(),
+                hero_background_url:  document.getElementById('qsHeroBg').value.trim(),
+                main_title:           document.getElementById('qsMainTitle').value.trim(),
+                main_image_url:       document.getElementById('qsMainImage').value.trim(),
+                main_content:         document.getElementById('qsMainContent').value.trim(),
+            };
+            await upsertQuemSomos(payload, 'Conteúdo principal salvo! O site já reflete a mudança.');
+        }
+
+        // Upload de imagem do Hero Background
+        async function uploadQsHeroBg() {
+            const fileInput = document.getElementById('qsHeroBgFile');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                showAlert('mainAlert', 'Selecione uma imagem primeiro', 'error');
+                return;
+            }
+            
+            if (!file.type.startsWith('image/')) {
+                showAlert('mainAlert', 'Por favor, selecione um arquivo de imagem válido', 'error');
+                return;
+            }
+
+            try {
+                const progressDiv = document.getElementById('qsHeroBgProgress');
+                const progressBar = document.getElementById('qsHeroBgProgressBar');
+                const progressText = document.getElementById('qsHeroBgProgressText');
+                
+                progressDiv.style.display = 'block';
+                progressText.textContent = 'Enviando...';
+
+                const fileName = `${Date.now()}-${file.name}`;
+                const { data: uploadData, error: uploadError } = await supabaseClient.storage
+                    .from('professor_images')
+                    .upload(`quem_somos/hero_bg/${fileName}`, file, {
+                        onUploadProgress: (progress) => {
+                            const percentComplete = (progress.loaded / progress.total) * 100;
+                            progressBar.style.width = percentComplete + '%';
+                            progressText.textContent = Math.round(percentComplete) + '%';
+                        }
                     });
 
-                if (error) throw error;
+                if (uploadError) throw uploadError;
 
-                showAlert('mainAlert', 'Configurações salvas com sucesso!', 'success');
+                const { data: urlData } = supabaseClient.storage
+                    .from('professor_images')
+                    .getPublicUrl(`quem_somos/hero_bg/${fileName}`);
+
+                document.getElementById('qsHeroBg').value = urlData.publicUrl;
+                progressText.textContent = 'Upload concluído!';
+                showAlert('mainAlert', 'Imagem enviada com sucesso!', 'success');
+                
+                setTimeout(() => {
+                    progressDiv.style.display = 'none';
+                    progressBar.style.width = '0%';
+                    fileInput.value = '';
+                }, 2000);
             } catch (error) {
-                showAlert('mainAlert', 'Erro ao salvar configurações: ' + error.message, 'error');
+                showAlert('mainAlert', 'Erro ao fazer upload: ' + error.message, 'error');
+                document.getElementById('qsHeroBgProgress').style.display = 'none';
             }
+        }
+
+        // Upload de imagem da Seção Principal
+        async function uploadQsMainImage() {
+            const fileInput = document.getElementById('qsMainImageFile');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                showAlert('mainAlert', 'Selecione uma imagem primeiro', 'error');
+                return;
+            }
+            
+            if (!file.type.startsWith('image/')) {
+                showAlert('mainAlert', 'Por favor, selecione um arquivo de imagem válido', 'error');
+                return;
+            }
+
+            try {
+                const progressDiv = document.getElementById('qsMainImageProgress');
+                const progressBar = document.getElementById('qsMainImageProgressBar');
+                const progressText = document.getElementById('qsMainImageProgressText');
+                
+                progressDiv.style.display = 'block';
+                progressText.textContent = 'Enviando...';
+
+                const fileName = `${Date.now()}-${file.name}`;
+                const { data: uploadData, error: uploadError } = await supabaseClient.storage
+                    .from('professor_images')
+                    .upload(`quem_somos/main_image/${fileName}`, file, {
+                        onUploadProgress: (progress) => {
+                            const percentComplete = (progress.loaded / progress.total) * 100;
+                            progressBar.style.width = percentComplete + '%';
+                            progressText.textContent = Math.round(percentComplete) + '%';
+                        }
+                    });
+
+                if (uploadError) throw uploadError;
+
+                const { data: urlData } = supabaseClient.storage
+                    .from('professor_images')
+                    .getPublicUrl(`quem_somos/main_image/${fileName}`);
+
+                document.getElementById('qsMainImage').value = urlData.publicUrl;
+                progressText.textContent = 'Upload concluído!';
+                showAlert('mainAlert', 'Imagem enviada com sucesso!', 'success');
+                
+                setTimeout(() => {
+                    progressDiv.style.display = 'none';
+                    progressBar.style.width = '0%';
+                    fileInput.value = '';
+                }, 2000);
+            } catch (error) {
+                showAlert('mainAlert', 'Erro ao fazer upload: ' + error.message, 'error');
+                document.getElementById('qsMainImageProgress').style.display = 'none';
+            }
+        }
+
+        // ---- Salva MVV ----
+        async function saveQuemSomosMVV() {
+            const payload = {
+                missao:  document.getElementById('qsMissao').value.trim(),
+                visao:   document.getElementById('qsVisao').value.trim(),
+                valores: document.getElementById('qsValores').value.trim(),
+            };
+            await upsertQuemSomos(payload, 'Missão / Visão / Valores salvos!');
+        }
+
+        // ---- Upsert genérico para tabela quem_somos ----
+        async function upsertQuemSomos(payload, successMsg) {
+            try {
+                // Busca id existente
+                const { data: existing } = await supabaseClient.from('quem_somos').select('id').limit(1);
+                let error;
+                if (existing && existing[0]) {
+                    ({ error } = await supabaseClient.from('quem_somos')
+                        .update({ ...payload, user_id: currentUser.id })
+                        .eq('id', existing[0].id));
+                } else {
+                    ({ error } = await supabaseClient.from('quem_somos')
+                        .insert([{ ...payload, user_id: currentUser.id }]));
+                }
+                if (error) throw error;
+                showAlert('mainAlert', successMsg, 'success');
+            } catch(e) { showAlert('mainAlert','Erro: '+e.message,'error'); }
+        }
+
+        // ======== DIFERENCIAIS ========
+        async function loadDiferenciais() {
+            const tbody = document.getElementById('diferencialTableBody');
+            tbody.innerHTML = '<tr><td colspan="4" class="text-center text-gray-500">Carregando...</td></tr>';
+            try {
+                const { data, error } = await supabaseClient
+                    .from('quem_somos_diferenciais').select('*')
+                    .order('id', { ascending: true });
+                if (error) throw error;
+                if (!data || data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4" class="text-center text-gray-500">Nenhum diferencial cadastrado.</td></tr>';
+                    return;
+                }
+                tbody.innerHTML = data.map(d => `
+                    <tr>
+                        <td><i class="${d.icone||'fas fa-star'}" style="font-size:1.2rem;color:#1976d2;"></i><br><small style="color:#999;">${d.icone||''}</small></td>
+                        <td><strong>${d.titulo||'—'}</strong></td>
+                        <td style="max-width:240px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${d.descricao||'—'}</td>
+                        <td>
+                            <button class="btn btn-warning text-sm" onclick="editDiferencial(${d.id})"><i class="fas fa-edit"></i> Editar</button>
+                            <button class="btn btn-danger text-sm" onclick="deleteDiferencial(${d.id})"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>`).join('');
+            } catch(e) { tbody.innerHTML = `<tr><td colspan="4" class="text-center text-red-500">Erro: ${e.message}</td></tr>`; }
+        }
+
+        function openDiferencialModal() {
+            document.getElementById('diferencialModalTitle').textContent = 'Novo Diferencial';
+            document.getElementById('diferencialId').value = '';
+            document.getElementById('diferencialIcone').value = '';
+            document.getElementById('diferencialTitulo').value = '';
+            document.getElementById('diferencialDescricao').value = '';
+            document.getElementById('diferencialModal').classList.add('show');
+        }
+        function closeDiferencialModal() { document.getElementById('diferencialModal').classList.remove('show'); }
+
+        async function editDiferencial(id) {
+            try {
+                const { data, error } = await supabaseClient.from('quem_somos_diferenciais').select('*').eq('id', id).single();
+                if (error) throw error;
+                document.getElementById('diferencialModalTitle').textContent = 'Editar Diferencial';
+                document.getElementById('diferencialId').value    = data.id;
+                document.getElementById('diferencialIcone').value = data.icone    || '';
+                document.getElementById('diferencialTitulo').value= data.titulo   || '';
+                document.getElementById('diferencialDescricao').value = data.descricao || '';
+                document.getElementById('diferencialModal').classList.add('show');
+            } catch(e) { showAlert('mainAlert','Erro: '+e.message,'error'); }
+        }
+
+        async function saveDiferencial() {
+            const id      = document.getElementById('diferencialId').value;
+            const icone   = document.getElementById('diferencialIcone').value.trim();
+            const titulo  = document.getElementById('diferencialTitulo').value.trim();
+            const descricao = document.getElementById('diferencialDescricao').value.trim();
+            if (!titulo) { showAlert('mainAlert','Preencha o título','error'); return; }
+            try {
+                const payload = { user_id: currentUser.id, icone, titulo, descricao };
+                let error;
+                if (id) { ({ error } = await supabaseClient.from('quem_somos_diferenciais').update(payload).eq('id', id)); }
+                else    { ({ error } = await supabaseClient.from('quem_somos_diferenciais').insert([payload])); }
+                if (error) throw error;
+                showAlert('mainAlert', id ? 'Diferencial atualizado!' : 'Diferencial adicionado!', 'success');
+                closeDiferencialModal();
+                loadDiferenciais();
+            } catch(e) { showAlert('mainAlert','Erro: '+e.message,'error'); }
+        }
+
+        async function deleteDiferencial(id) {
+            if (!confirm('Deletar este diferencial?')) return;
+            try {
+                const { error } = await supabaseClient.from('quem_somos_diferenciais').delete().eq('id', id);
+                if (error) throw error;
+                showAlert('mainAlert','Deletado!','success');
+                loadDiferenciais();
+            } catch(e) { showAlert('mainAlert','Erro: '+e.message,'error'); }
+        }
+
+        // ======== TIMELINE ========
+        async function loadTimeline() {
+            const tbody = document.getElementById('timelineTableBody');
+            tbody.innerHTML = '<tr><td colspan="4" class="text-center text-gray-500">Carregando...</td></tr>';
+            try {
+                const { data, error } = await supabaseClient
+                    .from('quem_somos_timeline').select('*')
+                    .order('ano', { ascending: true });
+                if (error) throw error;
+                if (!data || data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4" class="text-center text-gray-500">Nenhum marco cadastrado.</td></tr>';
+                    return;
+                }
+                tbody.innerHTML = data.map(t => `
+                    <tr>
+                        <td><span style="background:#e3f0fd;color:#1565c0;font-weight:800;padding:4px 10px;border-radius:20px;">${t.ano||'—'}</span></td>
+                        <td><strong>${t.titulo||'—'}</strong></td>
+                        <td style="max-width:260px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${t.descricao||'—'}</td>
+                        <td>
+                            <button class="btn btn-warning text-sm" onclick="editTimeline(${t.id})"><i class="fas fa-edit"></i> Editar</button>
+                            <button class="btn btn-danger text-sm" onclick="deleteTimeline(${t.id})"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>`).join('');
+            } catch(e) { tbody.innerHTML = `<tr><td colspan="4" class="text-center text-red-500">Erro: ${e.message}</td></tr>`; }
+        }
+
+        function openTimelineModal() {
+            document.getElementById('timelineModalTitle').textContent = 'Novo Marco da Timeline';
+            document.getElementById('timelineId').value    = '';
+            document.getElementById('timelineAno').value  = '';
+            document.getElementById('timelineTitulo').value = '';
+            document.getElementById('timelineDescricao').value = '';
+            document.getElementById('timelineModal').classList.add('show');
+        }
+        function closeTimelineModal() { document.getElementById('timelineModal').classList.remove('show'); }
+
+        async function editTimeline(id) {
+            try {
+                const { data, error } = await supabaseClient.from('quem_somos_timeline').select('*').eq('id', id).single();
+                if (error) throw error;
+                document.getElementById('timelineModalTitle').textContent = 'Editar Marco';
+                document.getElementById('timelineId').value   = data.id;
+                document.getElementById('timelineAno').value  = data.ano    || '';
+                document.getElementById('timelineTitulo').value = data.titulo || '';
+                document.getElementById('timelineDescricao').value = data.descricao || '';
+                document.getElementById('timelineModal').classList.add('show');
+            } catch(e) { showAlert('mainAlert','Erro: '+e.message,'error'); }
+        }
+
+        async function saveTimeline() {
+            const id        = document.getElementById('timelineId').value;
+            const ano       = document.getElementById('timelineAno').value.trim();
+            const titulo    = document.getElementById('timelineTitulo').value.trim();
+            const descricao = document.getElementById('timelineDescricao').value.trim();
+            if (!ano || !titulo) { showAlert('mainAlert','Preencha ano e título','error'); return; }
+            try {
+                const payload = { user_id: currentUser.id, ano, titulo, descricao };
+                let error;
+                if (id) { ({ error } = await supabaseClient.from('quem_somos_timeline').update(payload).eq('id', id)); }
+                else    { ({ error } = await supabaseClient.from('quem_somos_timeline').insert([payload])); }
+                if (error) throw error;
+                showAlert('mainAlert', id ? 'Marco atualizado!' : 'Marco adicionado!', 'success');
+                closeTimelineModal();
+                loadTimeline();
+            } catch(e) { showAlert('mainAlert','Erro: '+e.message,'error'); }
+        }
+
+        async function deleteTimeline(id) {
+            if (!confirm('Deletar este marco?')) return;
+            try {
+                const { error } = await supabaseClient.from('quem_somos_timeline').delete().eq('id', id);
+                if (error) throw error;
+                showAlert('mainAlert','Marco deletado!','success');
+                loadTimeline();
+            } catch(e) { showAlert('mainAlert','Erro: '+e.message,'error'); }
+        }
+
+        // ======== EQUIPE ========
+        async function loadEquipe() {
+            const tbody = document.getElementById('equipeTableBody');
+            tbody.innerHTML = '<tr><td colspan="5" class="text-center text-gray-500">Carregando...</td></tr>';
+            try {
+                const { data, error } = await supabaseClient
+                    .from('quem_somos_equipe').select('*')
+                    .order('ordem', { ascending: true });
+                if (error) throw error;
+                if (!data || data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="5" class="text-center text-gray-500">Nenhum membro cadastrado.</td></tr>';
+                    return;
+                }
+                tbody.innerHTML = data.map(m => `
+                    <tr>
+                        <td>${m.imagem_url
+                            ? `<img src="${m.imagem_url}" style="width:40px;height:40px;border-radius:50%;object-fit:cover;">`
+                            : '<i class="fas fa-user-circle" style="font-size:2rem;color:#ccc;"></i>'}</td>
+                        <td><strong>${m.nome||'—'}</strong></td>
+                        <td>${m.cargo||'—'}</td>
+                        <td>${m.ordem||'—'}</td>
+                        <td>
+                            <button class="btn btn-warning text-sm" onclick="editEquipe(${m.id})"><i class="fas fa-edit"></i> Editar</button>
+                            <button class="btn btn-danger text-sm" onclick="deleteEquipe(${m.id})"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>`).join('');
+            } catch(e) { tbody.innerHTML = `<tr><td colspan="5" class="text-center text-red-500">Erro: ${e.message}</td></tr>`; }
+        }
+
+        function openEquipeModal() {
+            document.getElementById('equipeModalTitle').textContent = 'Novo Membro da Equipe';
+            document.getElementById('equipeId').value     = '';
+            document.getElementById('equipeName').value   = '';
+            document.getElementById('equipeCargo').value  = '';
+            document.getElementById('equipeImagem').value = '';
+            document.getElementById('equipeOrdem').value  = '1';
+            document.getElementById('equipeModal').classList.add('show');
+        }
+        function closeEquipeModal() { document.getElementById('equipeModal').classList.remove('show'); }
+
+        async function editEquipe(id) {
+            try {
+                const { data, error } = await supabaseClient.from('quem_somos_equipe').select('*').eq('id', id).single();
+                if (error) throw error;
+                document.getElementById('equipeModalTitle').textContent = 'Editar Membro';
+                document.getElementById('equipeId').value     = data.id;
+                document.getElementById('equipeName').value   = data.nome       || '';
+                document.getElementById('equipeCargo').value  = data.cargo      || '';
+                document.getElementById('equipeImagem').value = data.imagem_url || '';
+                document.getElementById('equipeOrdem').value  = data.ordem      || 1;
+                document.getElementById('equipeModal').classList.add('show');
+            } catch(e) { showAlert('mainAlert','Erro: '+e.message,'error'); }
+        }
+
+        async function saveEquipe() {
+            const id     = document.getElementById('equipeId').value;
+            const nome   = document.getElementById('equipeName').value.trim();
+            const cargo  = document.getElementById('equipeCargo').value.trim();
+            const imagem_url = document.getElementById('equipeImagem').value.trim();
+            const ordem  = parseInt(document.getElementById('equipeOrdem').value) || 1;
+            if (!nome) { showAlert('mainAlert','Preencha o nome','error'); return; }
+            try {
+                const payload = { user_id: currentUser.id, nome, cargo, imagem_url: imagem_url||null, ordem };
+                let error;
+                if (id) { ({ error } = await supabaseClient.from('quem_somos_equipe').update(payload).eq('id', id)); }
+                else    { ({ error } = await supabaseClient.from('quem_somos_equipe').insert([payload])); }
+                if (error) throw error;
+                showAlert('mainAlert', id ? 'Membro atualizado!' : 'Membro adicionado!', 'success');
+                closeEquipeModal();
+                loadEquipe();
+            } catch(e) { showAlert('mainAlert','Erro: '+e.message,'error'); }
+        }
+
+        async function deleteEquipe(id) {
+            if (!confirm('Remover este membro?')) return;
+            try {
+                const { error } = await supabaseClient.from('quem_somos_equipe').delete().eq('id', id);
+                if (error) throw error;
+                showAlert('mainAlert','Membro removido!','success');
+                loadEquipe();
+            } catch(e) { showAlert('mainAlert','Erro: '+e.message,'error'); }
         }
 
         // ========== UTILITÁRIOS ==========
